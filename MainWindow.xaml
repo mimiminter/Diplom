@@ -1,0 +1,23 @@
+﻿<Window x:Class="TestProga.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestProga"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+       Title="Авторизация" Height="360" Width="550" WindowStartupLocation="CenterScreen" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ResizeMode="NoResize" >
+    <Grid Background="#6D8A96">
+        <Border MinWidth="400" MaxWidth="500" Margin="15,0,15,0" Background="#5D707F" VerticalAlignment="Center" Padding="30" Height="269">
+            <StackPanel>
+                <TextBlock Text="Авторизация администратора" HorizontalAlignment="Center"  FontSize="20" Margin="32,0,31,-5" Foreground="White"/>
+                <Grid Margin="0 0 0 20"/>
+                <TextBox x:Name ="Login" materialDesign:HintAssist.Hint="Введите логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" Cursor="Arrow" CaretBrush="White" SelectionBrush="White" Background="{x:Null}" BorderBrush="#89FFFFFF"/>
+                <PasswordBox x:Name ="pass1" materialDesign:HintAssist.Hint="Введите пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Foreground="White" Cursor="Arrow" CaretBrush="White" SelectionBrush="White" Background="{x:Null}" BorderBrush="#89FFFFFF"/>
+                <Button Content="Войти" Margin="0,10" Background="#8797B2"  Click="Button_Click" Height="30" BorderBrush="Black" Cursor="Hand" Foreground="White"/>
+                <Button Content="Сменить пароль"  Background="#8797B2"  Click="Button_Click_Smena" Height="30" Margin="0,10" BorderBrush="Black" Foreground="White"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+
+</Window>
