@@ -16,8 +16,9 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#6D8A96">
-                    <DataGrid Name="data_grid_listeners" Margin="400,10,10,10"></DataGrid>
-                    <TextBox x:Name="search" Background="White"  Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 10 20 20"  CaretBrush="Black" />
+                    <DataGrid Name="data_grid_listeners" Margin="400,10,10,10" AutoGenerateColumns="True">
+                    </DataGrid>
+                    <TextBox x:Name="search_listener" Background="White"  Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 10 20 20"  CaretBrush="Black" />
                     <Button Click="Button_Click_Search" Margin="100 60 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Поиск" Background="#8797B2" />
                     <Button Content="🗘" Height="30" Width="50" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="340 10 20 20" BorderBrush="Black" Background="#8797B2" Click="Button_Click_Update_Table"/>
                     <Button Click="Button_Click_Add_Listener" Margin="100 110 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Добавление" Background="#8797B2" />

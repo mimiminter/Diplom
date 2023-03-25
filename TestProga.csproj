@@ -5,7 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>programming_code_software_development_development_icon_251428.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="programming_code_software_development_development_icon_251428.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="2.1.2" />

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestProga"
         mc:Ignorable="d"
-        Title="AddListener" Height="450" Width="800">
-    <Grid>
-        
+        Title="Добавление" Height="530" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#6D8A96">
+        <DataGrid Name ="datagrid_courses" AutoGenerateColumns="True" Width="700" Height="200" Margin="20 20 20 20" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </Grid>
 </Window>
