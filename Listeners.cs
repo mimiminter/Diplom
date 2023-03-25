@@ -12,6 +12,8 @@ namespace TestProga
         public string fname { get; set; }
         public string mname { get; set; }
         public string lname { get; set; }
+        public int id_sex { get; set; }
+        public string sex { get; set; }
         public int id_course { get; set; }
         public DateTime birthday { get; set; }
         public int id_competence { get; set; }

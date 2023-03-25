@@ -25,7 +25,7 @@
                     <Button Click="Button_Click_Update_Listener" Margin="100 160 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Изменение" Background="#8797B2" />
                     <Button Click="Button_Click_Delete_Listener" Margin="100 210 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Удаление" Background="#8797B2" />
                     <Button Click="Button_Click_Excel_Listener" Margin="100 260 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Составить отчет" Background="#8797B2" />
-                    <Button Click="Button_Click_Diagram_Listener" Margin="100 310 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Составить диаграмму" Background="#8797B2" />
+                    <Button Click="Button_Click_Sort_Listener" Margin="100 310 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Сортировку данных" Background="#8797B2" />
                     <Button Click="Button_Click_Exit" Margin="100 360 20 20" VerticalAlignment="Top" HorizontalAlignment="Left"  BorderBrush="Black" Width="200" Foreground="White" Content="Закрыть программу" Background="#8797B2" Cursor="Hand" />
                 </Grid>
             </TabItem>

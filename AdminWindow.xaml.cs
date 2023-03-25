@@ -27,7 +27,7 @@ namespace TestProga
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
-            string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id";
+            string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,sex,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             createcommand.ExecuteNonQuery();
             SqlDataAdapter sql = new SqlDataAdapter(createcommand);
@@ -41,18 +41,20 @@ namespace TestProga
                 listeners.fname = Convert.ToString((string)row[1]);
                 listeners.mname = Convert.ToString((string)row[2]);
                 listeners.lname = Convert.ToString((string)row[3]);
-                listeners.birthday = Convert.ToDateTime(row[4]);
-                listeners.id_course = Convert.ToInt32(row[5]);
-                listeners.id_competence = Convert.ToInt32(row[6]);
-                listeners.competence = Convert.ToString((string)(row[7]));
-                listeners.email = Convert.ToString((string)(row[8]));
-                listeners.number = Convert.ToString((string)(row[9]));
-                listeners.series = Convert.ToString((string)(row[10]));
-                listeners.number_pass = Convert.ToString((string)(row[11]));
-                listeners.id_education = Convert.ToInt32(row[12]);
-                listeners.education = Convert.ToString((string)(row[13]));
-                listeners.login = Convert.ToString((string)(row[14]));
-                listeners.password = Convert.ToString((string)(row[15]));
+                listeners.id_sex = Convert.ToInt32(row[4]);
+                listeners.sex = Convert.ToString((string)row[5]);
+                listeners.birthday = Convert.ToDateTime(row[6]);
+                listeners.id_course = Convert.ToInt32(row[7]);
+                listeners.id_competence = Convert.ToInt32(row[8]);
+                listeners.competence = Convert.ToString((string)(row[9]));
+                listeners.email = Convert.ToString((string)(row[10]));
+                listeners.number = Convert.ToString((string)(row[11]));
+                listeners.series = Convert.ToString((string)(row[12]));
+                listeners.number_pass = Convert.ToString((string)(row[13]));
+                listeners.id_education = Convert.ToInt32(row[14]);
+                listeners.education = Convert.ToString((string)(row[15]));
+                listeners.login = Convert.ToString((string)(row[16]));
+                listeners.password = Convert.ToString((string)(row[17]));
                 listeners_list.Add(listeners);
             }
             data_grid_listeners.ItemsSource = listeners_list;
@@ -166,16 +168,24 @@ namespace TestProga
 
         private void Button_Click_Update_Listener(object sender, RoutedEventArgs e)
         {
-            UpdateListener update = new UpdateListener();
-            update.Show();
-            Close();
+            if (data_grid_listeners.SelectedItem != null)
+            {
+                Listeners selectedListeners = data_grid_listeners.SelectedItem as Listeners;
+                UpdateListener updateListener = new UpdateListener(selectedListeners.id);
+                updateListener.Show();
+                Close();
+            }
+            else if (data_grid_listeners.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали строку для изменения");
+            }
         }
         private void Button_Click_Excel_Listener(object sender, RoutedEventArgs e)
         {
             Process.Start(@"");// доделать
         }
 
-        private void Button_Click_Diagram_Listener(object sender, RoutedEventArgs e)
+        private void Button_Click_Sort_Listener(object sender, RoutedEventArgs e)
         {
             //Хз сделаю или нет
         }
@@ -232,7 +242,8 @@ namespace TestProga
                 if (MessageBox.Show("Вы действительно хотите удалить  данные?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Listeners listeners = data_grid_listeners.SelectedItem as Listeners;
-                    DataTable sel = Select("Delete Listeners where id =" + listeners.id);
+                    DataTable listeners_delete = Select("Delete Listeners where id =" + listeners.id);
+                    DataTable persons_delete = Select("Delete Persons where id =" + listeners.id);
                     MessageBox.Show("Слушатель с кодом " + listeners.id + " удален");
                 }
             }
