@@ -27,7 +27,6 @@ namespace TestProga
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
-            //listeners
             string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,sex,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             createcommand.ExecuteNonQuery();
@@ -60,6 +59,30 @@ namespace TestProga
             }
             data_grid_listeners.ItemsSource = listeners_list;
             //data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
+
+            string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
+            SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
+            createcommand1.ExecuteNonQuery();
+            SqlDataAdapter sql1 = new SqlDataAdapter(createcommand1);
+            DataTable dt_courses = new DataTable("courses");
+            sql1.Fill(dt_courses);
+            List<Courses> courses_list = new List<Courses>();
+            foreach (DataRow row1 in dt_courses.Rows)
+            {
+                Courses course = new Courses();
+                course.id = Convert.ToInt32(row1[0]);
+                course.id_competence = Convert.ToInt32(row1[1]);
+                course.competence = Convert.ToString((string)row1[2]);
+                course.time = Convert.ToInt32(row1[3]);
+                course.day = Convert.ToString((string)row1[4]);
+                course.time_1 = Convert.ToString(row1[5]);
+                course.time_2 = Convert.ToString(row1[6]);
+                course.date_1 = Convert.ToDateTime(row1[7]);
+                course.date_2 = Convert.ToDateTime(row1[8]);
+                courses_list.Add(course);
+            }
+            data_grid_courses.ItemsSource = courses_list;
+            //data_grid_courses.ItemsSource = dt_courses.DefaultView;
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
@@ -195,7 +218,7 @@ namespace TestProga
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
-            string cmd = "select id_course as 'Код курса',COUNT(*) as 'Количество человек на курсе' from Listeners group by id_course";
+            string cmd = "select count(*) as 'Количество слушателей' from Listeners";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             createcommand.ExecuteNonQuery();
             SqlDataAdapter sql = new SqlDataAdapter(createcommand);
@@ -268,6 +291,101 @@ namespace TestProga
             {
                 MessageBox.Show("Вы не выбрали строку для удаления");
             }
+        }
+
+        private void Button_Click_Search_Courses(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Add_Courses(object sender, RoutedEventArgs e)
+        {
+            AddCourse addCourse = new AddCourse();
+            addCourse.Show();
+            Close();
+        }
+
+        private void Button_Click_Update_Courses(object sender, RoutedEventArgs e)
+        {
+            /*if (data_grid_courses.SelectedItem != null)
+            {
+                
+                    Courses courses = data_grid_courses.SelectedItem as Courses;
+                    DataTable listeners_delete = Select("Delete Courses where id =" + courses.id);
+                    MessageBox.Show("Курс с кодом " + courses.id + " удален");
+                
+            }
+            else if (data_grid_listeners.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали строку для удаления");
+            }*/
+        }
+
+        private void Button_Click_Delete_Courses(object sender, RoutedEventArgs e)
+        {
+            if (data_grid_courses.SelectedItem != null)
+            {
+                if (MessageBox.Show("Вы действительно хотите удалить  данные?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Courses courses = data_grid_courses.SelectedItem as Courses;
+                    DataTable listeners_delete = Select("Delete Courses where id =" + courses.id);
+                    MessageBox.Show("Курс с кодом " + courses.id + " удален");
+                }
+            }
+            else if (data_grid_listeners.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали строку для удаления");
+            }
+        }
+
+        private void Button_Click_Excel_Courses(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Sort_Courses(object sender, RoutedEventArgs e)
+        {
+            InitializeComponent();
+            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            connection.Open();
+            string cmd = "select id_course as 'Код курса',COUNT(*) as 'Количество человек на курсе' from Listeners group by id_course";
+            SqlCommand createcommand = new SqlCommand(cmd, connection);
+            createcommand.ExecuteNonQuery();
+            SqlDataAdapter sql = new SqlDataAdapter(createcommand);
+            DataTable dt_sort = new DataTable("sort");
+            sql.Fill(dt_sort);
+            data_grid_courses.ItemsSource = dt_sort.DefaultView;
+            connection.Close();
+        }
+
+        private void Button_Click_Update_Table_Courses(object sender, RoutedEventArgs e)
+        {
+            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            connection.Open();
+            string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
+            SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
+            createcommand1.ExecuteNonQuery();
+            SqlDataAdapter sql1 = new SqlDataAdapter(createcommand1);
+            DataTable dt_courses = new DataTable("courses");
+            sql1.Fill(dt_courses);
+            List<Courses> courses_list = new List<Courses>();
+            foreach (DataRow row1 in dt_courses.Rows)
+            {
+                Courses course = new Courses();
+                course.id = Convert.ToInt32(row1[0]);
+                course.id_competence = Convert.ToInt32(row1[1]);
+                course.competence = Convert.ToString((string)row1[2]);
+                course.time = Convert.ToInt32(row1[3]);
+                course.day = Convert.ToString((string)row1[4]);
+                course.time_1 = Convert.ToString(row1[5]);
+                course.time_2 = Convert.ToString(row1[6]);
+                course.date_1 = Convert.ToDateTime(row1[7]);
+                course.date_2 = Convert.ToDateTime(row1[8]);
+                courses_list.Add(course);
+            }
+            data_grid_courses.ItemsSource = courses_list;
+            //data_grid_courses.ItemsSource = dt_courses.DefaultView;
+            connection.Close();
         }
     }
 
