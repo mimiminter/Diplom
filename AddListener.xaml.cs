@@ -322,8 +322,6 @@ namespace TestProga
                 {
                     MessageBox.Show("Код образования, который вы ввели, не существует");
                 }
-
-                DataTable loginData = Select("select * from Listeners where login_listener = '" + login_tb.Text + "'");
                 for (int i = 0; i < login_tb.Text.Length; i++)
                 {
                     if (login)
@@ -341,15 +339,6 @@ namespace TestProga
                         break;
                     }
                 }
-                if (loginData.Rows.Count > 0)
-                {
-                    login = true;
-                }
-                else if (loginData.Rows.Count == 0)
-                {
-                    MessageBox.Show("В системе уже есть такой логин");
-                }
-                DataTable pass = Select("select * from Listeners where password_listener = '" + password_tb.Password + "'");
                 for (int i = 0; i < password_tb.Password.Length; i++)
                 {
                     if (password)
@@ -366,14 +355,6 @@ namespace TestProga
                         MessageBox.Show("Поле пароль должно содержать только английские символы и имет длину не более 10 символов");
                         break;
                     }
-                }
-                if(pass.Rows.Count > 0)
-                {
-                    password = true;
-                }
-                else if(pass.Rows.Count == 0)
-                {
-                    MessageBox.Show("Такой пароль уже есть в системе");
                 }
                 for (int i = 0; i < password1_tb.Password.Length; i++)
                 {
