@@ -522,7 +522,17 @@ namespace TestProga
 
         private void Button_Click_Update_Competence(object sender, RoutedEventArgs e)
         {
-
+            if (data_grid_competence.SelectedItem != null)
+            {
+                Competence competence = data_grid_competence.SelectedItem as Competence;
+                UpdateCompetence updateCompetence = new UpdateCompetence(competence.id);
+                updateCompetence.Show();
+                Close();
+            }
+            else if (data_grid_competence.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали строку для изменения");
+            }
         }
 
         private void Button_Click_Delete_Competence(object sender, RoutedEventArgs e)

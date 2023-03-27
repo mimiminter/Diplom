@@ -114,10 +114,11 @@ namespace TestProga
                 }
                 if(sel1.Rows.Count > 0)
                 {
-
+                    id_type = true;
                 }
                 else if(sel1.Rows.Count == 0) 
                 {
+                    id_type = false;
                     MessageBox.Show("Код типа обучения, который вы ввели, не существует");
                 }
                 if(id && id_type && name)
