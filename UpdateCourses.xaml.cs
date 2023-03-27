@@ -17,11 +17,15 @@ using System.Windows.Shapes;
 namespace TestProga
 {
     /// <summary>
-    /// Логика взаимодействия для AddCourse.xaml
+    /// Логика взаимодействия для UpdateCourses.xaml
     /// </summary>
-    public partial class AddCourse : Window
+    public partial class UpdateCourses : Window
     {
-        public AddCourse()
+        public UpdateCourses()
+        {
+            InitializeComponent();
+        }
+        public UpdateCourses(int id)
         {
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
@@ -40,6 +44,24 @@ namespace TestProga
             sql1.Fill(dt_time);
             datagrid_competence.ItemsSource = dt_competence.DefaultView;
             datagrid_times.ItemsSource = dt_time.DefaultView;
+            string cmd2 = $"select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Courses.id_time as 'Код времени',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id and Courses.id = {id}";
+            SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+            createcommand2.ExecuteNonQuery();
+            SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+            DataTable dt_courses = new DataTable("courses");
+            sql2.Fill(dt_courses);
+            DataRow row = dt_courses.Rows[0];
+            Courses courses = new Courses();
+            courses.id = Convert.ToInt32(row[0]);
+            courses.id_competence = Convert.ToInt32(row[1]);
+            courses.time= Convert.ToInt32(row[2]);
+            courses.date_1 = Convert.ToDateTime(row[3]);
+            courses.date_2 = Convert.ToDateTime(row[4]);
+            id_tb.Text = courses.id.ToString();
+            id_competence_tb.Text = courses.id_competence.ToString();
+            id_time_tb.Text = courses.time.ToString();
+            date_start_tb.Text = courses.date_1.ToString();
+            date_end_tb.Text = courses.date_2.ToString();
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
@@ -54,11 +76,11 @@ namespace TestProga
             sqlConnection.Close();
             return dataTable;
         }
-        private void Button_Click_Add(object sender, RoutedEventArgs e)
+        private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
-            if (id_tb.Text.Length !=0 && id_competence_tb.Text.Length !=0 && id_time_tb.Text.Length !=0 && date_start_tb.Text.Length !=0 && date_end_tb.Text.Length !=0)
+            if (id_tb.Text.Length != 0 && id_competence_tb.Text.Length != 0 && id_time_tb.Text.Length != 0 && date_start_tb.Text.Length != 0 && date_end_tb.Text.Length != 0)
             {
-                bool id = false, id_competence = false, id_time = false, date1 = false,date2 = false;
+                bool id = false, id_competence = false, id_time = false, date1 = false, date2 = false;
                 for (int i = 0; i < id_tb.Text.Length; i++)
                 {
                     if (id)
@@ -94,7 +116,7 @@ namespace TestProga
                         break;
                     }
                 }
-                if(sel.Rows.Count > 0)
+                if (sel.Rows.Count > 0)
                 {
                     id_competence = true;
                 }
@@ -162,10 +184,10 @@ namespace TestProga
                         break;
                     }
                 }
-                if(id && id_competence && id_time && date1 && date2)
+                if (id && id_competence && id_time && date1 && date2)
                 {
-                    DataTable add_course = Select("insert into Courses values (" + id_tb.Text + ", " + id_competence_tb.Text + ", " + id_time_tb.Text + ", '" + date_start_tb.Text + "','" + date_end_tb.Text + "')");
-                    MessageBox.Show("Курс добавлен");
+                    DataTable add_course = Select($"update Courses set id_competence = {id_competence_tb.Text}, id_time = {id_time_tb.Text},date_start = '{date_start_tb.Text}',date_end = '{date_end_tb.Text}' where id = {id_tb.Text}");
+                    MessageBox.Show($"Курс c кодом {id_tb.Text} изменен");
                     AdminWindow adminWindow = new AdminWindow();
                     adminWindow.Show();
                     Close();
