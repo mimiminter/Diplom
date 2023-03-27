@@ -30,7 +30,7 @@ namespace TestProga
         public AddListener()
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select Courses.id as 'Код курса', Competence.name_competce as 'Компетенция',timetable.[day] as 'День проведения занятия', timetable.time_1 as 'Время начала', timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса', Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id \r\n";
             string cmd1 = "select id as 'Код начального образования', name as 'Наименование образования' from Educations";
@@ -58,7 +58,7 @@ namespace TestProga
         public static DataTable Select(string selectSQL)
         {
             DataTable dataTable = new("dataBase");
-            SqlConnection sqlConnection = new("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection sqlConnection = new("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             sqlConnection.Open();
             SqlCommand sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = selectSQL;
@@ -328,14 +328,14 @@ namespace TestProga
                     {
                         login = false;
                     }
-                    if (login_tb.Text[i] >= 'A' && login_tb.Text[i] <= 'Z' || login_tb.Text[i] >= 'a' && login_tb.Text[i] <= 'z' && login_tb.Text.Length <= 6)
+                    if (login_tb.Text[i] >= 'A' && login_tb.Text[i] <= 'Z' || login_tb.Text[i] >= 'a' && login_tb.Text[i] <= 'z' || login_tb.Text[i] >= '0' && login_tb.Text[i] <= '9' && login_tb.Text.Length <= 8)
                     {
                         login = true;
                         break;
                     }
                     if (login == false)
                     {
-                        MessageBox.Show("Поле логин должно содержать только английские символы и иметь длину не более 6");
+                        MessageBox.Show("Поле логин должно содержать английские символы,цифры и иметь длину не более 8");
                         break;
                     }
                 }
@@ -345,14 +345,14 @@ namespace TestProga
                     {
                         password = false;
                     }
-                    if (password_tb.Password[i] >= 'A' && password_tb.Password[i] <= 'Z' || password_tb.Password[i] >= 'a' && password_tb.Password[i] <= 'z' && password_tb.Password.Length <= 10)
+                    if (password_tb.Password[i] >= 'A' && password_tb.Password[i] <= 'Z' || password_tb.Password[i] >= 'a' && password_tb.Password[i] <= 'z' || password_tb.Password[i] >= '0' && password_tb.Password[i] <= '9' && password_tb.Password.Length <= 10)
                     {
                         password = true;
                         break;
                     }
                     if (password == false)
                     {
-                        MessageBox.Show("Поле пароль должно содержать только английские символы и имет длину не более 10 символов");
+                        MessageBox.Show("Поле пароль должно содержатm английские символы,цифры и иметь длину не более 10 символов");
                         break;
                     }
                 }
@@ -362,7 +362,7 @@ namespace TestProga
                     {
                         password1 = false;
                     }
-                    if (password1_tb.Password == password_tb.Password)
+                    if (password1_tb.Password[i] == password_tb.Password[i])
                     {
                         password1 = true;
                         break;

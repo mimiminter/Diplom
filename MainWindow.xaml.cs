@@ -58,12 +58,14 @@ namespace TestProga
         }
         private void Button_Click_Smena(object sender, RoutedEventArgs e)
         {
-
+            ChangePassword password = new ChangePassword();
+            password.Show();
+            Close();
         }
         public static DataTable Select(string selectSQL)
         {
             DataTable dataTable = new("dataBase");
-            SqlConnection sqlConnection = new("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection sqlConnection = new("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             sqlConnection.Open();
             SqlCommand sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = selectSQL;

@@ -24,7 +24,8 @@ namespace TestProga
         public AddCourse()
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            //SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server = localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select Competence.id as 'Код компетенции', Competence.name_competce as 'Название',TypeOfTraining.name_type as 'Тип обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
             string cmd1 = "select id as 'Код', [day] as 'День недели', time_1 as 'Время начала занятия',time_2 as 'Время окончания занятия' from timetable \r\n";
@@ -45,7 +46,7 @@ namespace TestProga
         public static DataTable Select(string selectSQL)
         {
             DataTable dataTable = new("dataBase");
-            SqlConnection sqlConnection = new("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection sqlConnection = new("server = localhost\\SQLEXPRESS;Trusted_Connection=YES;DataBase=bot;");
             sqlConnection.Open();
             SqlCommand sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = selectSQL;

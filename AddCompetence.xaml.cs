@@ -29,7 +29,7 @@ namespace TestProga
         public AddCompetence()
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select id as 'Код обучения', name_type as 'Тип обучения' from TypeOfTraining";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -43,7 +43,7 @@ namespace TestProga
         public static DataTable Select(string selectSQL)
         {
             DataTable dataTable = new("dataBase");
-            SqlConnection sqlConnection = new("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection sqlConnection = new("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             sqlConnection.Open();
             SqlCommand sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = selectSQL;

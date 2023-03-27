@@ -26,7 +26,7 @@ namespace TestProga
         public AdminWindow()
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,sex,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -107,7 +107,7 @@ namespace TestProga
         public static DataTable Select(string selectSQL)
         {
             DataTable dataTable = new("dataBase");
-            SqlConnection sqlConnection = new("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection sqlConnection = new("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             sqlConnection.Open();
             SqlCommand sqlCommand = sqlConnection.CreateCommand();
             sqlCommand.CommandText = selectSQL;
@@ -121,7 +121,7 @@ namespace TestProga
         {
             if (search_listener.Text != null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения'," +
                     "Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон'," +
@@ -169,7 +169,7 @@ namespace TestProga
             }
             else if (search_listener.Text == null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence,sex where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
                 SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -235,7 +235,7 @@ namespace TestProga
         private void Button_Click_Sort_Listener(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select count(*) as 'Количество слушателей' from Listeners";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -258,7 +258,7 @@ namespace TestProga
         private void Button_Click_Update_Table(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence,sex where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -316,7 +316,7 @@ namespace TestProga
         {
             if(search_courses.Text !=null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id " + " and ( Courses.id like '%" + search_courses.Text + "%' or Courses.id_competence like '%" + search_courses.Text + "%' or Competence.name_competce like '%" + search_courses.Text + "%' or Courses.id_time like '%" + search_courses.Text + "%' or timetable.day like '%" + search_courses.Text + "%' or timetable.time_1 like '%" + search_courses.Text + "%' or timetable.time_2 like '%" + search_courses.Text + "%' or Courses.date_start like '%" + search_courses.Text  + "%' or Courses.date_end like '%" + search_courses.Text + "%')"; 
                 SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
@@ -345,7 +345,7 @@ namespace TestProga
             }
             else if (search_courses.Text == null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
                 SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
@@ -421,7 +421,7 @@ namespace TestProga
         private void Button_Click_Sort_Courses(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd = "select id_course as 'Код курса',COUNT(*) as 'Количество человек на курсе' from Listeners group by id_course";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
@@ -435,7 +435,7 @@ namespace TestProga
 
         private void Button_Click_Update_Table_Courses(object sender, RoutedEventArgs e)
         {
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
             SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
@@ -467,7 +467,7 @@ namespace TestProga
         {
             if(search_competence.Text !=null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd2 = $"select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id and ( Competence.id like '%{search_competence.Text}%' or Competence.name_competce like '%{search_competence.Text}%' or TypeOfTraining.id like '%{search_competence.Text}%' or TypeOfTraining.name_type like '%{search_competence.Text}%' )";
                 SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
@@ -490,7 +490,7 @@ namespace TestProga
             }
             else if (search_competence.Text== null)
             {
-                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
                 string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
                 SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
@@ -559,7 +559,7 @@ namespace TestProga
 
         private void Button_Click_Sort_Competence(object sender, RoutedEventArgs e)
         {
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd2 = "select TypeOfTraining.name_type as 'Тип обучения', COUNT(Competence.id_type_of_training) as 'Количество компетенций с данным типом обучения'  from TypeOfTraining,Competence where Competence.id_type_of_training = TypeOfTraining.id group by TypeOfTraining.name_type";
             SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
@@ -573,7 +573,7 @@ namespace TestProga
 
         private void Button_Click_Update_Table_Competence(object sender, RoutedEventArgs e)
         {
-            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
             string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
             SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
@@ -595,5 +595,4 @@ namespace TestProga
             connection.Close();
         }
     }
-
 }
