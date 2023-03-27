@@ -84,6 +84,24 @@ namespace TestProga
             }
             data_grid_courses.ItemsSource = courses_list;
             //data_grid_courses.ItemsSource = dt_courses.DefaultView;
+
+            string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
+            SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+            createcommand2.ExecuteNonQuery();
+            SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+            DataTable dt_competence = new DataTable("competence");
+            sql2.Fill(dt_competence);
+            List<Competence> competence_list = new List<Competence>();
+            foreach (DataRow row2 in dt_competence.Rows)
+            {
+                Competence competence = new Competence();
+                competence.id = Convert.ToInt32(row2[0]);
+                competence.name = Convert.ToString((string)(row2[1]));
+                competence.id_type = Convert.ToInt32(row2[2]);
+                competence.name_type = Convert.ToString((string)(row2[3]));
+                competence_list.Add(competence);
+            }
+            data_grid_competence.ItemsSource = competence_list;
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
@@ -442,6 +460,128 @@ namespace TestProga
             }
             data_grid_courses.ItemsSource = courses_list;
             //data_grid_courses.ItemsSource = dt_courses.DefaultView;
+            connection.Close();
+        }
+
+        private void Button_Click_Search_Competence(object sender, RoutedEventArgs e)
+        {
+            if(search_competence.Text !=null)
+            {
+                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                connection.Open();
+                string cmd2 = $"select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id and ( Competence.id like '%{search_competence.Text}%' or Competence.name_competce like '%{search_competence.Text}%' or TypeOfTraining.id like '%{search_competence.Text}%' or TypeOfTraining.name_type like '%{search_competence.Text}%' )";
+                SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+                createcommand2.ExecuteNonQuery();
+                SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+                DataTable dt_competence = new DataTable("competence");
+                sql2.Fill(dt_competence);
+                List<Competence> competence_list = new List<Competence>();
+                foreach (DataRow row2 in dt_competence.Rows)
+                {
+                    Competence competence = new Competence();
+                    competence.id = Convert.ToInt32(row2[0]);
+                    competence.name = Convert.ToString((string)(row2[1]));
+                    competence.id_type = Convert.ToInt32(row2[2]);
+                    competence.name_type = Convert.ToString((string)(row2[3]));
+                    competence_list.Add(competence);
+                }
+                data_grid_competence.ItemsSource = competence_list;
+                connection.Close();
+            }
+            else if (search_competence.Text== null)
+            {
+                SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+                connection.Open();
+                string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
+                SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+                createcommand2.ExecuteNonQuery();
+                SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+                DataTable dt_competence = new DataTable("competence");
+                sql2.Fill(dt_competence);
+                List<Competence> competence_list = new List<Competence>();
+                foreach (DataRow row2 in dt_competence.Rows)
+                {
+                    Competence competence = new Competence();
+                    competence.id = Convert.ToInt32(row2[0]);
+                    competence.name = Convert.ToString((string)(row2[1]));
+                    competence.id_type = Convert.ToInt32(row2[2]);
+                    competence.name_type = Convert.ToString((string)(row2[3]));
+                    competence_list.Add(competence);
+                }
+                data_grid_competence.ItemsSource = competence_list;
+                connection.Close();
+            }
+        }
+
+        private void Button_Click_Add_Competence(object sender, RoutedEventArgs e)
+        {
+            AddCompetence addCompetence = new AddCompetence();
+            addCompetence.Show();
+            Close();
+        }
+
+        private void Button_Click_Update_Competence(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Delete_Competence(object sender, RoutedEventArgs e)
+        {
+            if (data_grid_competence.SelectedItem != null)
+            {
+                if (MessageBox.Show("Вы действительно хотите удалить  данные?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Competence competence = data_grid_competence.SelectedItem as Competence;
+                    DataTable competence_delete = Select($"Delete Competence where id = {competence.id} ");
+                    MessageBox.Show("Компетенция с кодом " + competence.id + " удалена");
+                }
+            }
+            else if (data_grid_competence.SelectedItem == null)
+            {
+                MessageBox.Show("Вы не выбрали строку для удаления");
+            }
+        }
+
+        private void Button_Click_Excel_Competence(object sender, RoutedEventArgs e)
+        {
+            //Process.Start(@"");
+        }
+
+        private void Button_Click_Sort_Competence(object sender, RoutedEventArgs e)
+        {
+            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            connection.Open();
+            string cmd2 = "select TypeOfTraining.name_type as 'Тип обучения', COUNT(Competence.id_type_of_training) as 'Количество компетенций с данным типом обучения'  from TypeOfTraining,Competence where Competence.id_type_of_training = TypeOfTraining.id group by TypeOfTraining.name_type";
+            SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+            createcommand2.ExecuteNonQuery();
+            SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+            DataTable dt_competence = new DataTable("competence");
+            sql2.Fill(dt_competence);
+            data_grid_competence.ItemsSource = dt_competence.DefaultView;
+            connection.Close();
+        }
+
+        private void Button_Click_Update_Table_Competence(object sender, RoutedEventArgs e)
+        {
+            SqlConnection connection = new SqlConnection("server=WIN-NHF22QP2E4K\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
+            connection.Open();
+            string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
+            SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
+            createcommand2.ExecuteNonQuery();
+            SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
+            DataTable dt_competence = new DataTable("competence");
+            sql2.Fill(dt_competence);
+            List<Competence> competence_list = new List<Competence>();
+            foreach (DataRow row2 in dt_competence.Rows)
+            {
+                Competence competence = new Competence();
+                competence.id = Convert.ToInt32(row2[0]);
+                competence.name = Convert.ToString((string)(row2[1]));
+                competence.id_type = Convert.ToInt32(row2[2]);
+                competence.name_type = Convert.ToString((string)(row2[3]));
+                competence_list.Add(competence);
+            }
+            data_grid_competence.ItemsSource = competence_list;
             connection.Close();
         }
     }
