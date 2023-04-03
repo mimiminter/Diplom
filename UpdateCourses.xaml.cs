@@ -44,7 +44,7 @@ namespace TestProga
             sql1.Fill(dt_time);
             datagrid_competence.ItemsSource = dt_competence.DefaultView;
             datagrid_times.ItemsSource = dt_time.DefaultView;
-            string cmd2 = $"select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Courses.id_time as 'Код времени',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id and Courses.id = {id}";
+            string cmd2 = $"select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Courses.id_time as 'Код времени',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса',Courses.moodle_url from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id and Courses.id = {id}";
             SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
             createcommand2.ExecuteNonQuery();
             SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
@@ -57,11 +57,13 @@ namespace TestProga
             courses.time= Convert.ToInt32(row[2]);
             courses.date_1 = Convert.ToDateTime(row[3]);
             courses.date_2 = Convert.ToDateTime(row[4]);
+            courses.moodle = Convert.ToString((string)row[5]);
             id_tb.Text = courses.id.ToString();
             id_competence_tb.Text = courses.id_competence.ToString();
             id_time_tb.Text = courses.time.ToString();
             date_start_tb.Text = courses.date_1.ToString();
             date_end_tb.Text = courses.date_2.ToString();
+            moodle_tb.Text = courses.moodle.ToString();
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
@@ -78,9 +80,26 @@ namespace TestProga
         }
         private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
-            if (id_tb.Text.Length != 0 && id_competence_tb.Text.Length != 0 && id_time_tb.Text.Length != 0 && date_start_tb.Text.Length != 0 && date_end_tb.Text.Length != 0)
+            if (id_tb.Text.Length != 0 && id_competence_tb.Text.Length != 0 && id_time_tb.Text.Length != 0 && date_start_tb.Text.Length != 0 && date_end_tb.Text.Length != 0 && moodle_tb.Text.Length !=0)
             {
-                bool id = false, id_competence = false, id_time = false, date1 = false, date2 = false;
+                bool id = false, id_competence = false, id_time = false, date1 = false, date2 = false, moodle = false;
+                for (int i = 0; i < id_time_tb.Text.Length; i++)
+                {
+                    if (moodle)
+                    {
+                        moodle = false;
+                    }
+                    if (moodle_tb.Text.Contains("https://moodle"))
+                    {
+                        moodle = true;
+                        break;
+                    }
+                    if (moodle == false)
+                    {
+                        MessageBox.Show("Поле moodle должно содержать ссылку");
+                        break;
+                    }
+                }
                 for (int i = 0; i < id_tb.Text.Length; i++)
                 {
                     if (id)
@@ -184,9 +203,9 @@ namespace TestProga
                         break;
                     }
                 }
-                if (id && id_competence && id_time && date1 && date2)
+                if (id && id_competence && id_time && date1 && date2 && moodle)
                 {
-                    DataTable add_course = Select($"update Courses set id_competence = {id_competence_tb.Text}, id_time = {id_time_tb.Text},date_start = '{date_start_tb.Text}',date_end = '{date_end_tb.Text}' where id = {id_tb.Text}");
+                    DataTable add_course = Select($"update Courses set id_competence = {id_competence_tb.Text}, id_time = {id_time_tb.Text},date_start = '{date_start_tb.Text}',date_end = '{date_end_tb.Text}',moodle_url = N'{moodle_tb.Text}' where id = {id_tb.Text}");
                     MessageBox.Show($"Курс c кодом {id_tb.Text} изменен");
                     AdminWindow adminWindow = new AdminWindow();
                     adminWindow.Show();

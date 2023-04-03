@@ -57,9 +57,26 @@ namespace TestProga
         }
         private void Button_Click_Add(object sender, RoutedEventArgs e)
         {
-            if (id_tb.Text.Length !=0 && id_competence_tb.Text.Length !=0 && id_time_tb.Text.Length !=0 && date_start_tb.Text.Length !=0 && date_end_tb.Text.Length !=0)
+            if (id_tb.Text.Length !=0 && id_competence_tb.Text.Length !=0 && id_time_tb.Text.Length !=0 && date_start_tb.Text.Length !=0 && date_end_tb.Text.Length !=0 && moodle_tb.Text.Length !=0)
             {
-                bool id = false, id_competence = false, id_time = false, date1 = false,date2 = false;
+                bool id = false, id_competence = false, id_time = false, date1 = false,date2 = false, moodle = false;
+                for (int i = 0; i < id_time_tb.Text.Length; i++)
+                {
+                    if (moodle)
+                    {
+                        moodle = false;
+                    }
+                    if (moodle_tb.Text.Contains("https://moodle"))
+                    {
+                        moodle = true;
+                        break;
+                    }
+                    if (moodle == false)
+                    {
+                        MessageBox.Show("Поле moodle должно содержать ссылку");
+                        break;
+                    }
+                }
                 for (int i = 0; i < id_tb.Text.Length; i++)
                 {
                     if (id)
@@ -163,9 +180,9 @@ namespace TestProga
                         break;
                     }
                 }
-                if(id && id_competence && id_time && date1 && date2)
+                if(id && id_competence && id_time && date1 && date2 && moodle)
                 {
-                    DataTable add_course = Select("insert into Courses values (" + id_tb.Text + ", " + id_competence_tb.Text + ", " + id_time_tb.Text + ", '" + date_start_tb.Text + "','" + date_end_tb.Text + "')");
+                    DataTable add_course = Select("insert into Courses values (" + id_tb.Text + ", " + id_competence_tb.Text + ", " + id_time_tb.Text + ",N'" + moodle_tb.Text + "','" + date_start_tb.Text + "','" + date_end_tb.Text + "')");
                     MessageBox.Show("Курс добавлен");
                     AdminWindow adminWindow = new AdminWindow();
                     adminWindow.Show();

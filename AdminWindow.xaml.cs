@@ -61,7 +61,7 @@ namespace TestProga
             data_grid_listeners.ItemsSource = listeners_list;
             //data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
 
-            string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса' from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
+            string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса',Courses.moodle_url from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
             SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
             createcommand1.ExecuteNonQuery();
             SqlDataAdapter sql1 = new SqlDataAdapter(createcommand1);
@@ -72,6 +72,7 @@ namespace TestProga
             {
                 Courses course = new Courses();
                 course.id = Convert.ToInt32(row1[0]);
+                course.moodle = Convert.ToString((string)row1[9]);
                 course.id_competence = Convert.ToInt32(row1[1]);
                 course.competence = Convert.ToString((string)row1[2]);
                 course.time = Convert.ToInt32(row1[3]);
