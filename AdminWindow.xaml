@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestProga"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Основное окно" Height="530" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Главное окно" Height="530" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Width="400" Height="50">
