@@ -17,6 +17,6 @@ namespace TestProga
         public string time_1 { get; set; }
         public string time_2 { get; set; }
         public DateTime date_1 { get; set; }
-        public DateTime date_2 { get; set; } 
+        public DateTime date_2 { get; set; }
     }
 }

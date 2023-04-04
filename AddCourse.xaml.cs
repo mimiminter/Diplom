@@ -29,18 +29,25 @@ namespace TestProga
             connection.Open();
             string cmd = "select Competence.id as 'Код компетенции', Competence.name_competce as 'Название',TypeOfTraining.name_type as 'Тип обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
             string cmd1 = "select id as 'Код', [day] as 'День недели', time_1 as 'Время начала занятия',time_2 as 'Время окончания занятия' from timetable \r\n";
+            string cmd2 = "select Teachers.id as 'Код',Persons.surname as 'Фамилия преподавателя',Persons.name as 'Имя преподавател',Persons.patronymic as 'Отчество преподавателя',Teachers.birthday as 'Дата рождения', Teachers.email as 'Электронная почта',Teachers.phone_number as 'Номер телефона' from teachers,Persons where Teachers.id_person = Persons.id\r\n";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
+            SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
             createcommand.ExecuteNonQuery();
             createcommand1.ExecuteNonQuery();
+            createcommand2.ExecuteNonQuery();
             SqlDataAdapter sql = new SqlDataAdapter(createcommand);
             SqlDataAdapter sql1 = new SqlDataAdapter(createcommand1);
+            SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
             DataTable dt_competence = new DataTable("competence");
             DataTable dt_time = new DataTable("timetable");
+            DataTable dt_teacher = new DataTable("teachers");
             sql.Fill(dt_competence);
             sql1.Fill(dt_time);
+            sql2.Fill(dt_teacher);
             datagrid_competence.ItemsSource = dt_competence.DefaultView;
             datagrid_times.ItemsSource = dt_time.DefaultView;
+            datagrid_teachers.ItemsSource = dt_teacher.DefaultView;
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
