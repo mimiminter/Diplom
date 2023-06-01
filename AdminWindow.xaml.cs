@@ -424,7 +424,7 @@ namespace TestProga
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
-            string cmd = "select id_course as 'Код курса',COUNT(*) as 'Количество человек на курсе' from Listeners group by id_course";
+            string cmd = "select Courses.id as 'Код курса', Competence.name_competce as 'Компетенция' , COUNT(*) as 'Количество человек на курсе' from Listeners,Competence,Courses where Courses.id = Competence.id and Listeners.id_course = Courses.id group by Competence.name_competce,Courses.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             createcommand.ExecuteNonQuery();
             SqlDataAdapter sql = new SqlDataAdapter(createcommand);
