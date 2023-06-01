@@ -28,13 +28,14 @@ namespace TestProga
             InitializeComponent();
             SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
             connection.Open();
-            string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,sex,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
+            //string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,sex,Educations,Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
+            string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество',sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',Courses.id as 'Код курса',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners, Courses, Persons, sex, Educations, Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
             SqlCommand createcommand = new SqlCommand(cmd, connection);
             createcommand.ExecuteNonQuery();
             SqlDataAdapter sql = new SqlDataAdapter(createcommand);
             DataTable dt_listeners = new DataTable("listeners");
             sql.Fill(dt_listeners);
-            List<Listeners> listeners_list = new List<Listeners>();
+            /*List<Listeners> listeners_list = new List<Listeners>();
             foreach (DataRow row in dt_listeners.Rows)
             {
                 Listeners listeners = new Listeners();
@@ -58,16 +59,16 @@ namespace TestProga
                 listeners.password = Convert.ToString((string)(row[17]));
                 listeners_list.Add(listeners);
             }
-            data_grid_listeners.ItemsSource = listeners_list;
-            //data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
-
-            string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса',Courses.moodle_url from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
+            data_grid_listeners.ItemsSource = listeners_list;*/
+            data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
+            //string cmd1 = "select Courses.id as 'Код курса', Courses.id_competence as 'Код компетенции',Competence.name_competce as 'Название компетенции',Courses.id_time as 'Код времени',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса',Courses.moodle_url from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
+            string cmd1 = "select Courses.id as 'Код курса',Competence.name_competce as 'Название компетенции',timetable.day as 'День проведения занятия', timetable.time_1 as 'Время начала',timetable.time_2 as 'Время окончания',Courses.date_start as 'Дата начала курса',Courses.date_end as 'Дата окончания курса',Courses.moodle_url from Courses,Competence,timetable where Courses.id_competence = Competence.id and Courses.id_time = timetable.id\r\n";
             SqlCommand createcommand1 = new SqlCommand(cmd1, connection);
             createcommand1.ExecuteNonQuery();
             SqlDataAdapter sql1 = new SqlDataAdapter(createcommand1);
             DataTable dt_courses = new DataTable("courses");
             sql1.Fill(dt_courses);
-            List<Courses> courses_list = new List<Courses>();
+            /*List<Courses> courses_list = new List<Courses>();
             foreach (DataRow row1 in dt_courses.Rows)
             {
                 Courses course = new Courses();
@@ -83,16 +84,18 @@ namespace TestProga
                 course.date_2 = Convert.ToDateTime(row1[8]);
                 courses_list.Add(course);
             }
-            data_grid_courses.ItemsSource = courses_list;
-            //data_grid_courses.ItemsSource = dt_courses.DefaultView;
+            data_grid_courses.ItemsSource = courses_list;*/
+            data_grid_courses.ItemsSource = dt_courses.DefaultView;
 
-            string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
+
+            string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
+            //string cmd2 = "select Competence.id as 'Код компетенции',Competence.name_competce as 'Наименование компетенции',TypeOfTraining.id as 'Код типа обучения', TypeOfTraining.name_type as 'Наименование типа обучения' from Competence,TypeOfTraining where Competence.id_type_of_training = TypeOfTraining.id";
             SqlCommand createcommand2 = new SqlCommand(cmd2, connection);
             createcommand2.ExecuteNonQuery();
             SqlDataAdapter sql2 = new SqlDataAdapter(createcommand2);
             DataTable dt_competence = new DataTable("competence");
             sql2.Fill(dt_competence);
-            List<Competence> competence_list = new List<Competence>();
+            /*List<Competence> competence_list = new List<Competence>();
             foreach (DataRow row2 in dt_competence.Rows)
             {
                 Competence competence = new Competence();
@@ -102,7 +105,8 @@ namespace TestProga
                 competence.name_type = Convert.ToString((string)(row2[3]));
                 competence_list.Add(competence);
             }
-            data_grid_competence.ItemsSource = competence_list;
+            data_grid_competence.ItemsSource = competence_list;*/
+            data_grid_competence.ItemsSource= dt_competence.DefaultView;
             connection.Close();
         }
         public static DataTable Select(string selectSQL)
@@ -124,7 +128,9 @@ namespace TestProga
             {
                 SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
-                string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения'," +
+                string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество',sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',Courses.id as 'Код курса',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners, Courses, Persons, sex, Educations, Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id" +
+                    " and (Listeners.id like '%" + search_listener.Text + "%' or Persons.surname like '%" + search_listener.Text + "%' or Persons.[name] like '%" + search_listener.Text + "%' or Persons.patronymic like '%" + search_listener.Text + "%' or Listeners.birthday like '%" + search_listener.Text + "%' or Courses.id like '%" + search_listener.Text + "%' or Competence.name_competce like '%" + search_listener.Text + "%' or Listeners.email like '%" + search_listener.Text + "%' or Listeners.phone_number like '%" + search_listener.Text + "%' or Listeners.series_passport like '%" + search_listener.Text + "%' or Listeners.number_passport like '%" + search_listener.Text + "%' or Educations.[name] like '%" + search_listener.Text + "%' or Listeners.login_listener like '%" + search_listener.Text + "%' or Listeners.password_listener like '%" + search_listener.Text + "%' or sex.sex_name like '%" + search_listener.Text + "%' )";
+                /*string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения'," +
                     "Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон'," +
                     "Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', " +
                     "Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence,sex where Listeners.id_education = Educations.id" +
@@ -134,13 +140,13 @@ namespace TestProga
                     "Competence.id like '%" + search_listener.Text + "%' or Competence.name_competce like '%" + search_listener.Text + "%' or Listeners.email like '%" + search_listener.Text + "%' or " +
                     "Listeners.phone_number like '%" + search_listener.Text + "%' or Listeners.series_passport like '%" + search_listener.Text + "%' or Listeners.number_passport like '%" + search_listener.Text + "%' or " +
                     "Educations.id like '%" + search_listener.Text + "%' or Educations.[name] like '%" + search_listener.Text + "%' or Listeners.login_listener like '%" + search_listener.Text + "%' or " +
-                    "Listeners.password_listener like '%" + search_listener.Text + "%' or sex.id like '%" + search_listener.Text + "%' or sex.sex_name like '%" + search_listener.Text + "%' )";
+                    "Listeners.password_listener like '%" + search_listener.Text + "%' or sex.id like '%" + search_listener.Text + "%' or sex.sex_name like '%" + search_listener.Text + "%' )";*/
                 SqlCommand createcommand = new SqlCommand(cmd, connection);
                 createcommand.ExecuteNonQuery();
                 SqlDataAdapter sql = new SqlDataAdapter(createcommand);
                 DataTable dt_listeners = new DataTable("listeners");
                 sql.Fill(dt_listeners);
-                List<Listeners> listeners_list = new List<Listeners>();
+                /*List<Listeners> listeners_list = new List<Listeners>();
                 foreach (DataRow row in dt_listeners.Rows)
                 {
                     Listeners listeners = new Listeners();
@@ -163,22 +169,23 @@ namespace TestProga
                     listeners.login = Convert.ToString((string)(row[16]));
                     listeners.password = Convert.ToString((string)(row[17]));
                     listeners_list.Add(listeners);
-                }
-                data_grid_listeners.ItemsSource = listeners_list.ToList();
-                //data_grid_listeners.ItemsSource = dt.DefaultView;
+                }*/
+                //data_grid_listeners.ItemsSource = listeners_list.ToList();
+                data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
                 connection.Close();
             }
             else if (search_listener.Text == null)
             {
                 SqlConnection connection = new SqlConnection("server=localhost\\SQLEXPRESS; Trusted_Connection=YES;DataBase=bot;");
                 connection.Open();
-                string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence,sex where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
+                //string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество', Persons.id_sex as 'Код пола', sex.sex_name as 'Пол', Listeners.birthday as 'Дата рождения',  Courses.id as 'Код курса',Competence.id as 'Код компетенции',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.id as 'Код образования',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners,Courses,Persons,Educations,Competence,sex where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
+                string cmd = "select Listeners.id as 'Код', Persons.surname as 'Фамилия', Persons.[name] as 'Имя', Persons.patronymic as 'Отчество',sex.sex_name as 'Пол',Listeners.birthday as 'Дата рождения',Courses.id as 'Код курса',Competence.name_competce as 'Компетенция', Listeners.email as 'Почта', Listeners.phone_number as 'Телефон',Listeners.series_passport as 'Серия паспорта', Listeners.number_passport as 'Номер паспорта',Educations.[name] as 'Образование', Listeners.login_listener as 'Логин',Listeners.password_listener as 'Пароль' from Listeners, Courses, Persons, sex, Educations, Competence where Listeners.id_education = Educations.id and Listeners.id_person = Persons.id and Listeners.id_course = Courses.id and Courses.id_competence = Competence.id and Persons.id_sex = sex.id";
                 SqlCommand createcommand = new SqlCommand(cmd, connection);
                 createcommand.ExecuteNonQuery();
                 SqlDataAdapter sql = new SqlDataAdapter(createcommand);
                 DataTable dt_listeners = new DataTable("listeners");
                 sql.Fill(dt_listeners);
-                List<Listeners> listeners_list = new List<Listeners>();
+                /*List<Listeners> listeners_list = new List<Listeners>();
                 foreach (DataRow row in dt_listeners.Rows)
                 {
                     Listeners listeners = new Listeners();
@@ -201,9 +208,9 @@ namespace TestProga
                     listeners.login = Convert.ToString((string)(row[16]));
                     listeners.password = Convert.ToString((string)(row[17]));
                     listeners_list.Add(listeners);
-                }
-                data_grid_listeners.ItemsSource = listeners_list.ToList();
-                //data_grid_listeners.ItemsSource = dt.DefaultView;
+                }*/
+                //data_grid_listeners.ItemsSource = listeners_list.ToList();
+                data_grid_listeners.ItemsSource = dt_listeners.DefaultView;
                 connection.Close();
             }
         }
@@ -230,7 +237,7 @@ namespace TestProga
         }
         private void Button_Click_Excel_Listener(object sender, RoutedEventArgs e)
         {
-            //Process.Start(@"");// доделать
+            Process.Start(@"C:\Users\Администратор\Desktop\OtchetListeners.xlsx");
         }
 
         private void Button_Click_Sort_Listener(object sender, RoutedEventArgs e)
@@ -416,7 +423,7 @@ namespace TestProga
 
         private void Button_Click_Excel_Courses(object sender, RoutedEventArgs e)
         {
-            //Process.Start(@"");
+            Process.Start(@"C:\Users\Администратор\Desktop\OtchetCoursess.xlsx");
         }
 
         private void Button_Click_Sort_Courses(object sender, RoutedEventArgs e)
@@ -555,7 +562,7 @@ namespace TestProga
 
         private void Button_Click_Excel_Competence(object sender, RoutedEventArgs e)
         {
-            //Process.Start(@"");
+            Process.Start(@"C:\Users\Администратор\Desktop\OtchetCompetence.xlsx");
         }
 
         private void Button_Click_Sort_Competence(object sender, RoutedEventArgs e)

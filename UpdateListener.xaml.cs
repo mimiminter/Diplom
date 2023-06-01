@@ -252,7 +252,7 @@ namespace TestProga
                 else if (data.Rows.Count == 0)
                 {
                     id_course = false;
-                    MessageBox.Show("Курса, который вы ввели, не существует");
+                    MessageBox.Show("Курс, который вы ввели, не существует");
                 }
                 for (int i = 0; i < birthday_tb.Text.Length; i++)
                 {
